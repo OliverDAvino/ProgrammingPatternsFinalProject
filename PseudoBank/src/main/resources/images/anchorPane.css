@@ -1,0 +1,16 @@
+
+#purpleAnchorPane {
+
+    -fx-background-color: #611B81;
+
+}
+
+#innerAnchorPane {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    
+    
+}
