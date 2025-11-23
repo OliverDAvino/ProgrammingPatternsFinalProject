@@ -7,12 +7,13 @@ import java.sql.SQLException;
 public class connectionManager {
 
     public static Connection getConnection() {
-        String url = "jdbc:mysql://127.0.0.1/";
+        String url = "jdbc:mysql://127.0.0.1/pseudobank";
         String user = "root";
         String password = "";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
-            return connection;
+        try  {
+
+            return DriverManager.getConnection(url, user, password);
         }
         catch (SQLException e) {
             e.printStackTrace();

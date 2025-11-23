@@ -14,6 +14,10 @@ public class LoginController {
 
     }
 
+    public String getFullName(String username) {
+        return Login.getUserFullName(username);
+    }
+
 
 
 }

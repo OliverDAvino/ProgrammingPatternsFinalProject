@@ -5,6 +5,7 @@ import com.example.pseudobank.Controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -23,7 +24,38 @@ public class LoginViewController {
     private PasswordField passwordTextField;
 
     @FXML
+    private Button loginButton;
+
+    @FXML
     private Label errorLabel;
+
+    @FXML
+    public void initialize() {
+        loginButton.setDefaultButton(true);
+    }
+
+
+    private void loadMainView(String username) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+
+        String name = loginController.getFullName(username);
+
+        MainViewController mainViewController = fxmlLoader.getController();
+
+        mainViewController.setAccountName(name);
+
+        Stage stage = (Stage) usernameTextField.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Pseudo Bank");
+        stage.show();
+
+
+
+    }
+
+
 
     @FXML
     private void handleLogin() throws IOException {
@@ -34,7 +66,7 @@ public class LoginViewController {
         boolean success = loginController.validateUserLogin(username, password);
 
         if (success) {
-            loadMainView();
+            loadMainView(username);
         } else {
             errorLabel.setText("Invalid username or password");
             errorLabel.setVisible(true);
@@ -42,16 +74,6 @@ public class LoginViewController {
 
     }
 
-    private void loadMainView() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("View/MainView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        Stage stage = (Stage) usernameTextField.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle("Pseudo Bank");
-        stage.show();
-
-    }
 
 }
