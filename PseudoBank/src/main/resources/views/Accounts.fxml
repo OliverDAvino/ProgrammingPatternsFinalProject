@@ -7,16 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="609.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pseudobank.View.MainViewController">
+
+<AnchorPane prefHeight="584.0" prefWidth="864.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.Accounts">
    <children>
-      <AnchorPane fx:id="mainMenuBar" layoutX="21.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="800.0" stylesheets="@../images/MainMenuBar.css">
+      <AnchorPane fx:id="mainMenuBar" layoutX="31.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="800.0" stylesheets="@../images/MainMenuBar.css">
          <children>
             <ImageView fx:id="menuBarLogo" fitHeight="80.0" fitWidth="80.0" layoutX="36.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/logo.png" />
                </image>
             </ImageView>
-            <Button fx:id="myAccountsButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMyAccounts" prefHeight="49.0" prefWidth="96.0" text="My Accounts" />
+            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMyAccounts" prefHeight="49.0" prefWidth="96.0" text="Home " />
             <Button fx:id="transactionsButton" layoutX="275.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTransactions" prefHeight="49.0" prefWidth="96.0" text="Transactions" />
             <Button fx:id="signOutButton" layoutX="697.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleSignOut" prefHeight="35.0" prefWidth="80.0" text="Sign Out" />
             <ImageView fx:id="accountIcon" fitHeight="49.0" fitWidth="69.0" layoutX="479.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
@@ -27,15 +28,6 @@
             <Label fx:id="accountName" layoutX="544.0" layoutY="27.0" prefHeight="35.0" prefWidth="141.0" textFill="WHITE">
                <font>
                   <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="mainMenuAnchorPane" layoutX="21.0" layoutY="139.0" prefHeight="433.0" prefWidth="513.0" stylesheets="@../images/MainMenuAnchorPane.css">
-         <children>
-            <Label fx:id="menuWelcomeLabel" layoutX="14.0" layoutY="6.0" prefHeight="138.0" prefWidth="479.0" text=" " textFill="WHITE">
-               <font>
-                  <Font size="30.0" />
                </font>
             </Label>
          </children>
