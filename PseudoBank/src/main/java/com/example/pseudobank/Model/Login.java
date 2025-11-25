@@ -56,6 +56,32 @@ public class Login {
 
     }
 
+    public static int getUserID(String username) {
+
+        String sql = "SELECT id FROM users WHERE username = ?";
+
+        try (Connection conn = connectionManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return 0;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+
+    }
+
 
 
 }

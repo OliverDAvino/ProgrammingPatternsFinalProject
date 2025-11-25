@@ -18,6 +18,11 @@ public class LoginController {
         return Login.getUserFullName(username);
     }
 
+    public int getUserID(String username) {
+        return  Login.getUserID(username);
+    }
+
+
 
 
 }

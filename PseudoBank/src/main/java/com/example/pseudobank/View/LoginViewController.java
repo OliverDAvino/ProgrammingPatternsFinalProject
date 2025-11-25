@@ -2,6 +2,7 @@ package com.example.pseudobank.View;
 
 
 import com.example.pseudobank.Controller.LoginController;
+import com.example.pseudobank.Model.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,6 +43,7 @@ public class LoginViewController {
 
         String name = loginController.getFullName(username);
 
+
         MainViewController mainViewController = fxmlLoader.getController();
 
         mainViewController.setAccountName(name);
@@ -66,6 +68,10 @@ public class LoginViewController {
         boolean success = loginController.validateUserLogin(username, password);
 
         if (success) {
+
+            int id = loginController.getUserID(username);
+            Session.userId = id;
+
             loadMainView(username);
         } else {
             errorLabel.setText("Invalid username or password");
