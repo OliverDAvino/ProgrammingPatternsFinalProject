@@ -11,9 +11,31 @@ import java.util.List;
 
 public class Account {
 
+    private String accountType;
+    private String accountNumber;
+    private double balance;
 
+    public Account(String accountType, String accountNumber, double balance) {
 
+        this.accountType = accountType;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
 
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    //method to get the users accounts and thier types
     public static List<String> getUserAccounts() {
 
         String sql = "SELECT accountType FROM accounts WHERE UserID = ?";

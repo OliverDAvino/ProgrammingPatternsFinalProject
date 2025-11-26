@@ -1,8 +1,14 @@
 
 #accountanchorpane {
 
+    -fx-background-color: #611B81;
+    -fx-background-radius: 20;
+
+}
+
+#innerAnchorPane {
+
     -fx-background-color: white;
     -fx-background-radius: 5;
-
 
 }
