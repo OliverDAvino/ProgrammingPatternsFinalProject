@@ -1,6 +1,7 @@
 package com.example.pseudobank.View;
 
 import com.example.pseudobank.Controller.MainController;
+import com.example.pseudobank.Model.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -66,8 +67,12 @@ public class MainViewController {
     @FXML
     private void handleMyAccounts() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/AccountsView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Accounts.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
+        AccountsViewController accountsViewController = fxmlLoader.getController();
+
+        accountsViewController.loadAccountTypes(Session.userId);
 
         Stage stage = (Stage) myAccountsButton.getScene().getWindow();
         stage.setScene(scene);

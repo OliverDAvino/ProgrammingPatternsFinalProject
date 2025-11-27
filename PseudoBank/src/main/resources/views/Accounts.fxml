@@ -18,7 +18,7 @@
                   <Image url="@../images/logo.png" />
                </image>
             </ImageView>
-            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMyAccounts" prefHeight="49.0" prefWidth="96.0" text="Home " />
+            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMainPage" prefHeight="49.0" prefWidth="96.0" text="Home " />
             <Button fx:id="transactionsButton" layoutX="275.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleTransactions" prefHeight="49.0" prefWidth="96.0" text="Transactions" />
             <Button fx:id="signOutButton" layoutX="697.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleSignOut" prefHeight="35.0" prefWidth="80.0" text="Sign Out" />
             <ImageView fx:id="accountIcon" fitHeight="49.0" fitWidth="69.0" layoutX="479.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
@@ -35,7 +35,7 @@
       </AnchorPane>
       <AnchorPane fx:id="accountanchorpane" layoutX="31.0" layoutY="145.0" prefHeight="403.0" prefWidth="305.0" stylesheets="@../images/accountAnchorPane.css">
          <children>
-            <TableView fx:id="accountTableView" layoutX="51.0" layoutY="24.0" prefHeight="361.0" prefWidth="200.0">
+            <TableView fx:id="accountTypeTableView" layoutX="51.0" layoutY="24.0" prefHeight="361.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="displayAccountsTableView" prefWidth="199.0" text="My Accounts" />
                 <TableColumn minWidth="0.0" prefWidth="0.0" />
@@ -43,11 +43,11 @@
             </TableView>
          </children>
       </AnchorPane>
-      <TableView fx:id="accountSummaryTableView" layoutX="392.0" layoutY="145.0" prefHeight="403.0" prefWidth="438.0">
+      <TableView fx:id="accountInfoTableView" layoutX="392.0" layoutY="145.0" prefHeight="403.0" prefWidth="438.0">
         <columns>
-          <TableColumn prefWidth="117.111083984375" text="Account Type" />
-          <TableColumn prefWidth="126.22222900390625" text="Account #" />
-            <TableColumn prefWidth="193.33331298828125" text="Balance" />
+          <TableColumn fx:id="accountTypeColumn" prefWidth="117.111083984375" text="Account Type" />
+          <TableColumn fx:id="accountNumberColumn" prefWidth="126.22222900390625" text="Account #" />
+            <TableColumn fx:id="balanceColumn" prefWidth="193.33331298828125" text="Balance" />
         </columns>
       </TableView>
    </children>

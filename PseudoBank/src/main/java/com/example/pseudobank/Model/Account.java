@@ -36,16 +36,16 @@ public class Account {
     }
 
     //method to get the users accounts and thier types
-    public static List<String> getUserAccounts() {
+    public static List<String> getUserAccounts(int userID) {
 
-        String sql = "SELECT accountType FROM accounts WHERE UserID = ?";
+        String sql = "SELECT accountType FROM accounts WHERE userID = ?";
 
         List<String> accountTypes = new ArrayList<>();
 
         try (Connection conn = connectionManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, Session.userId);
+            pstmt.setInt(1, userID);
 
             ResultSet rs = pstmt.executeQuery();
 
