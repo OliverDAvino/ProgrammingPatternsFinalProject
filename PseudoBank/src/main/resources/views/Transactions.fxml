@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="561.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+   <children>
+      <AnchorPane fx:id="mainMenuBar" layoutX="31.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="800.0" stylesheets="@../images/MainMenuBar.css">
+         <children>
+            <ImageView fx:id="menuBarLogo" fitHeight="80.0" fitWidth="80.0" layoutX="36.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logo.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="signOutButton" layoutX="697.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleSignOut" prefHeight="35.0" prefWidth="80.0" text="Sign Out" />
+            <ImageView fx:id="accountIcon" fitHeight="49.0" fitWidth="69.0" layoutX="479.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/prupleicon-removebg-preview.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="accountName" layoutX="544.0" layoutY="27.0" prefHeight="35.0" prefWidth="141.0" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="96.0" text="Home" />
+            <Button fx:id="accountsButton" layoutX="272.0" layoutY="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="96.0" text="Accounts" />
+         </children>
+      </AnchorPane>
+      <TableView fx:id="transactionTableView" layoutX="197.0" layoutY="194.0" prefHeight="302.0" prefWidth="450.0">
+        <columns>
+          <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
+            <TableColumn fx:id="transactionIDColumn" prefWidth="125.0" text="Transaction ID" />
+          <TableColumn fx:id="transactionTypeColumn" prefWidth="125.0" text="Transaction Type" />
+            <TableColumn fx:id="amountColumn" prefWidth="100.0" text="Amount" />
+        </columns>
+      </TableView>
+      <Label fx:id="accountBalance" alignment="CENTER" contentDisplay="CENTER" layoutY="116.0" prefHeight="53.0" prefWidth="843.0" text="(Account Balance)">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
