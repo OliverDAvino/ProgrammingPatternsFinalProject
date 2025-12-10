@@ -38,7 +38,6 @@
             <TableView fx:id="accountTypeTableView" layoutX="51.0" layoutY="24.0" prefHeight="361.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="displayAccountsTableView" prefWidth="199.0" text="My Accounts" />
-                <TableColumn minWidth="0.0" prefWidth="0.0" />
               </columns>
             </TableView>
          </children>

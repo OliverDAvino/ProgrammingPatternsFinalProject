@@ -3,7 +3,7 @@ module com.example.pseudobank {
     requires javafx.fxml;
     requires java.sql;
     requires javafx.graphics;
-    requires com.example.pseudobank;
+    //requires com.example.pseudobank;
     //requires com.example.pseudobank;
 
     opens com.example.pseudobank to javafx.fxml;
