@@ -22,6 +22,8 @@ public class LoginViewController {
     private TextField usernameTextField;
 
     @FXML
+    private Button signUpButton;
+    @FXML
     private PasswordField passwordTextField;
 
     @FXML
@@ -58,6 +60,21 @@ public class LoginViewController {
     }
 
 
+
+    @FXML
+    private void handleSignUp() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/SignUp.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+
+
+        Stage stage = (Stage) signUpButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Sign Up");
+        stage.show();
+
+
+    }
 
     @FXML
     private void handleLogin() throws IOException {

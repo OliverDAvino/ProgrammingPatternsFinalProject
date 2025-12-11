@@ -7,7 +7,7 @@ module com.example.pseudobank {
     //requires com.example.pseudobank;
 
     opens com.example.pseudobank to javafx.fxml;
-
+    opens com.example.pseudobank.Model to javafx.base;
     opens com.example.pseudobank.View to javafx.fxml;
 
 

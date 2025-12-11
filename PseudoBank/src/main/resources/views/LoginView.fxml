@@ -23,17 +23,20 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="errorLabel" alignment="CENTER" layoutX="174.0" layoutY="277.0" prefHeight="25.0" prefWidth="236.0" textAlignment="CENTER" textFill="#ff2626" />
+            <TextField fx:id="usernameTextField" layoutX="71.0" layoutY="108.0" prefHeight="27.0" prefWidth="461.0" promptText="Username" />
+            <Label alignment="CENTER" layoutX="67.0" layoutY="142.0" prefHeight="27.0" prefWidth="97.0" text="Password">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordTextField" layoutX="71.0" layoutY="176.0" prefHeight="25.0" prefWidth="461.0" promptText="Password" />
+            <Button fx:id="loginButton" layoutX="235.0" layoutY="229.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="35.0" prefWidth="114.0" text="Login" />
+            <Label fx:id="errorLabel" alignment="CENTER" layoutX="174.0" layoutY="204.0" prefHeight="25.0" prefWidth="236.0" textAlignment="CENTER" textFill="#ff2626" />
+            <Label layoutX="230.0" layoutY="286.0" text="Don't have an account?" />
+            <Label layoutX="236.0" layoutY="309.0" text="Sign up:" />
+            <Button fx:id="signUpButton" layoutX="292.0" layoutY="305.0" mnemonicParsing="false" onAction="#handleSignUp" text="Sign Up" />
          </children>
       </AnchorPane>
-      <TextField fx:id="usernameTextField" layoutX="122.0" layoutY="189.0" prefHeight="27.0" prefWidth="461.0" promptText="Username" />
-      <Label alignment="CENTER" layoutX="115.0" layoutY="238.0" prefHeight="27.0" prefWidth="97.0" text="Password">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="loginButton" layoutX="292.0" layoutY="324.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="35.0" prefWidth="114.0" text="Login" />
-      <PasswordField fx:id="passwordTextField" layoutX="122.0" layoutY="265.0" prefHeight="25.0" prefWidth="461.0" promptText="Password" />
       <Label layoutX="235.0" layoutY="110.0" text="Pseudo Bank Login">
          <font>
             <Font size="28.0" />

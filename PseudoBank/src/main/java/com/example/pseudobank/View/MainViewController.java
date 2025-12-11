@@ -2,6 +2,7 @@ package com.example.pseudobank.View;
 
 import com.example.pseudobank.Controller.MainController;
 import com.example.pseudobank.Model.Session;
+import com.example.pseudobank.Model.Transaction;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,6 +22,9 @@ public class MainViewController {
     private ImageView menuBarLogo;
 
     @FXML
+    private Label financialTipLabel;
+
+    @FXML
     private Label accountName;
 
     @FXML
@@ -37,9 +41,12 @@ public class MainViewController {
 
     @FXML
     public void initialize() {
-
+        //make logo circle
         menuBarLogo.setFitHeight(80);
         menuBarLogo.setFitWidth(80);
+        int index = (int)(Math.random() * Session.tips.length);
+        String tip = Session.tips[index];
+        financialTipLabel.setText(tip);
 
         Circle clip = new Circle(40,40, 40);
 
@@ -84,8 +91,11 @@ public class MainViewController {
     @FXML
     private void handleTransactions() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/TransactionsView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Transactions.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
+        TransactionViewController transactionViewController = fxmlLoader.getController();
+        transactionViewController.loadAccountTypes(Session.userId);
 
         Stage stage = (Stage) transactionsButton.getScene().getWindow();
         stage.setScene(scene);

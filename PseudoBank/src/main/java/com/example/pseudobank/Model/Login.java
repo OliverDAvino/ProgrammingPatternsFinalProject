@@ -41,7 +41,10 @@ public class Login {
 
             ResultSet rs = pstmt.executeQuery();
 
+
+
             if (rs.next()) {
+                Session.userName = rs.getString("fullName");
                 return rs.getString("fullName");
             } else {
                 return "";

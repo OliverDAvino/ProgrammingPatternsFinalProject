@@ -1,19 +1,24 @@
 package com.example.pseudobank.View;
 
+import com.example.pseudobank.Database.connectionManager;
 import com.example.pseudobank.Model.Account;
+import com.example.pseudobank.Model.Login;
+import com.example.pseudobank.Model.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 
 public class AccountsViewController {
@@ -24,8 +29,21 @@ public class AccountsViewController {
     @FXML
     private Label accountName;
 
+    @FXML Label accountBalance;
+
     @FXML
     private Button homeButton;
+
+    @FXML
+    private TextField initialAmountTextField;
+    @FXML
+    private Button createAccountButton;
+
+    @FXML
+    private Label createAccountError;
+
+    @FXML
+    private ComboBox<String> accountTypeComboBox;
 
     @FXML
     private Button transactionsButton;
@@ -46,7 +64,7 @@ public class AccountsViewController {
     private TableColumn<Account, String> accountTypeColumn;
 
     @FXML
-    private TableColumn<Account, Integer> accountNumberColumn;
+    private TableColumn<Account, String> accountNumberColumn;
 
     @FXML
     private TableColumn<Account, Double> balanceColumn;
@@ -55,6 +73,8 @@ public class AccountsViewController {
 
     @FXML
     public void initialize() {
+
+        accountTypeComboBox.getItems().addAll("Chequing", "Savings", "TFSA", "RRSP");
 
         displayAccountsTableView.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue())
@@ -65,41 +85,130 @@ public class AccountsViewController {
         accountNumberColumn.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
+        accountTypeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+
+                loadAccountsByType(newValue);
+            }
+        });
+
+        accountName.setText(Session.userName);
+
+
     }
 
     public void loadAccountTypes(int userID){
         List<String> accountTypes = Account.getUserAccounts(userID);
         accountTypeTableView.setItems(FXCollections.observableArrayList(accountTypes));
 
-
     }
 
-    public void loadAccounts(int userID) {
 
-//        List<Account> accounts = Account.getUserAccounts(userID);
-//
-//        accountTableView.setItems(FXCollections.observableArrayList(accounts));
-
+    public void loadAccountsByType(String type) {
+        int userID = Session.userId; // however you store logged-in user
+        List<Account> accounts = Account.getUserAccountsByType(userID, type);
+        accountInfoTableView.setItems(FXCollections.observableArrayList(accounts));
     }
+
 
     @FXML
     private void handleMainPage() throws IOException {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
+        // Get the controller that belongs to the loaded FXML
+        MainViewController controller = fxmlLoader.getController();
 
+        //Send data to it
+        controller.setAccountName(Session.userName);
+
+        Stage stage = (Stage) homeButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Pseudo Bank");
+        stage.show();
     }
+
 
     @FXML
     private void handleTransactions() throws IOException {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Transactions.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
+        TransactionViewController transactionViewController = fxmlLoader.getController();
+        transactionViewController.loadAccountTypes(Session.userId);
+
+        Stage stage = (Stage) transactionsButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Transactions");
+        stage.show();
 
     }
 
     @FXML
     private void handleSignOut() throws IOException {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
+        Stage stage = (Stage) signOutButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Pseudo Bank Login");
+        stage.show();
 
+    }
+
+    @FXML
+    private void handleCreateAccount() {
+
+        String selectedType = accountTypeComboBox.getValue();
+        int userId = Session.userId;
+        String balanceInput = initialAmountTextField.getText();
+
+        //validate account type
+        if (selectedType == null) {
+            createAccountError.setText("Please choose an account type.");
+            return;
+        }
+
+        //Validate balance
+        if (balanceInput.isEmpty()) {
+            createAccountError.setText("Please enter an initial balance.");
+            return;
+        }
+
+        double balance;
+        try {
+            balance = Double.parseDouble(balanceInput);
+            if (balance < 0) {
+                createAccountError.setText("Balance cannot be negative.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            createAccountError.setText("Balance must be a valid number.");
+            return;
+        }
+
+        // dont allow multiple  account types
+        List<String> existingTypes = Account.getUserAccounts(userId);
+        if (existingTypes.contains(selectedType)) {
+            createAccountError.setText("This account type already exists.");
+            return;
+        }
+
+        //Create the account with starting balance
+        boolean success = Account.createAccount(userId, selectedType, balance);
+
+        if (!success) {
+            createAccountError.setText("Error creating account.");
+            return;
+        }
+
+        loadAccountTypes(userId);
+        loadAccountsByType(selectedType);
+        createAccountError.setText("Account created successfully!");
+
+        initialAmountTextField.clear();
     }
 }

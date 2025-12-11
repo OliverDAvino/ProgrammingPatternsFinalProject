@@ -1,0 +1,1 @@
+2025-12-11T00:08:40.384443600 - UserID 1 | AccountID 3 | Deposit | Amount: $10000.0

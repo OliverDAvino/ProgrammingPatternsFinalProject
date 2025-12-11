@@ -4,13 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="561.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="561.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pseudobank.View.TransactionViewController">
    <children>
       <AnchorPane fx:id="mainMenuBar" layoutX="31.0" layoutY="14.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="800.0" stylesheets="@../images/MainMenuBar.css">
          <children>
@@ -30,22 +30,40 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="96.0" text="Home" />
-            <Button fx:id="accountsButton" layoutX="272.0" layoutY="20.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="96.0" text="Accounts" />
+            <Button fx:id="homeButton" layoutX="147.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMainPage" prefHeight="49.0" prefWidth="96.0" text="Home" />
+            <Button fx:id="accountsButton" layoutX="272.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleMyAccounts" prefHeight="49.0" prefWidth="96.0" text="Accounts" />
          </children>
       </AnchorPane>
-      <TableView fx:id="transactionTableView" layoutX="197.0" layoutY="194.0" prefHeight="302.0" prefWidth="450.0">
+      <TableView fx:id="transactionTableView" layoutX="366.0" layoutY="155.0" prefHeight="223.0" prefWidth="450.0">
         <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Date" />
-            <TableColumn fx:id="transactionIDColumn" prefWidth="125.0" text="Transaction ID" />
-          <TableColumn fx:id="transactionTypeColumn" prefWidth="125.0" text="Transaction Type" />
-            <TableColumn fx:id="amountColumn" prefWidth="100.0" text="Amount" />
+          <TableColumn fx:id="dateColumn" prefWidth="134.0" text="Date" />
+            <TableColumn fx:id="transactionIDColumn" prefWidth="88.99996948242188" text="Transaction ID" />
+          <TableColumn fx:id="transactionTypeColumn" prefWidth="107.6666259765625" text="Transaction Type" />
+            <TableColumn fx:id="amountColumn" prefWidth="121.0" text="Amount" />
         </columns>
       </TableView>
-      <Label fx:id="accountBalance" alignment="CENTER" contentDisplay="CENTER" layoutY="116.0" prefHeight="53.0" prefWidth="843.0" text="(Account Balance)">
+      <Label fx:id="accountBalance" alignment="CENTER" contentDisplay="CENTER" layoutX="366.0" layoutY="111.0" prefHeight="53.0" prefWidth="450.0">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
+      <AnchorPane fx:id="accountanchorpane" layoutX="41.0" layoutY="134.0" prefHeight="403.0" prefWidth="305.0" stylesheets="@../images/accountAnchorPane.css">
+         <children>
+            <TableView fx:id="accountTypeTableView" layoutX="51.0" layoutY="24.0" prefHeight="361.0" prefWidth="200.0">
+               <columns>
+                  <TableColumn fx:id="displayAccountsTableView" prefWidth="199.0" text="My Accounts" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <Label layoutX="489.0" layoutY="380.0" text="New Transaction:">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <TextField fx:id="amountTextField" layoutX="508.0" layoutY="434.0" prefHeight="25.0" prefWidth="166.0" promptText="Amount:" />
+      <Button fx:id="withdrawButton" layoutX="618.0" layoutY="489.0" mnemonicParsing="false" onAction="#handlesWithdraw" prefHeight="49.0" prefWidth="129.0" text="Withdraw" />
+      <Button fx:id="depositButton" layoutX="433.0" layoutY="489.0" mnemonicParsing="false" onAction="#handlesDeposit" prefHeight="49.0" prefWidth="129.0" text="Deposit" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="527.0" layoutY="465.0" prefHeight="17.0" prefWidth="129.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>
