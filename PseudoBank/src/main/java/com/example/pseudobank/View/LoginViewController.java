@@ -14,8 +14,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+//loginviewcontroller uses the methods from login controller to check the username and pass to let user in
+
 public class LoginViewController {
 
+    //create login controller to use its methods
     private LoginController loginController = new LoginController();
 
     @FXML
@@ -38,14 +41,18 @@ public class LoginViewController {
     }
 
 
+    //method to load the main page after the user logs in
+    //and sends the users name so we can display it in the welcome message
+
     private void loadMainView(String username) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        //get teh full name
         String name = loginController.getFullName(username);
 
-
+        //pass the name to the mainview controller
         MainViewController mainViewController = fxmlLoader.getController();
 
         mainViewController.setAccountName(name);
@@ -60,6 +67,7 @@ public class LoginViewController {
     }
 
 
+    //method to handle the sign up page
 
     @FXML
     private void handleSignUp() throws IOException {
@@ -76,6 +84,10 @@ public class LoginViewController {
 
     }
 
+    //method to handle the login
+    //checks if the username and passwoed are correct
+    //if wrong error message shows
+
     @FXML
     private void handleLogin() throws IOException {
 
@@ -85,7 +97,7 @@ public class LoginViewController {
         boolean success = loginController.validateUserLogin(username, password);
 
         if (success) {
-
+            //saves the users id to session userid to use later
             int id = loginController.getUserID(username);
             Session.userId = id;
 

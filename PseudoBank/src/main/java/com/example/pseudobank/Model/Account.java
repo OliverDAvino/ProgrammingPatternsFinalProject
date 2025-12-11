@@ -49,6 +49,7 @@ public class Account {
 
             ResultSet rs = pstmt.executeQuery();
 
+            //add each account into the list
             while (rs.next()) {
                 accountTypes.add(rs.getString("accountType"));
             }
@@ -64,6 +65,8 @@ public class Account {
 
     }
 
+    //get users accounts of a type
+
     public static List<Account> getUserAccountsByType(int userID, String type) {
 
         String sql = "SELECT accountType, accountNumber, balance FROM accounts WHERE userID = ? AND accountType = ?";
@@ -77,6 +80,7 @@ public class Account {
 
             ResultSet rs = pstmt.executeQuery();
 
+            //craete account object for each one found and add to accounts list
             while (rs.next()) {
                 accounts.add(new Account(
                         rs.getString("accountType"),
@@ -92,6 +96,8 @@ public class Account {
         return accounts;
     }
 
+    //get the account id using the account type
+
     public static int getAccountIdByType(int userID, String type) {
         String sql = "SELECT accountId FROM accounts WHERE userID = ? AND accountType = ? LIMIT 1";
 
@@ -102,6 +108,8 @@ public class Account {
             stmt.setString(2, type);
 
             ResultSet rs = stmt.executeQuery();
+
+            //return account id for that account type
             if (rs.next()) {
                 return rs.getInt("accountId");
             }
@@ -109,10 +117,12 @@ public class Account {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return -1; // NOT FOUND
+        //if not found
+        return -1;
     }
 
+
+    //get the balance for a specific account id
 
     public static double getBalanceByAccountId(int accountId) {
 
@@ -134,6 +144,9 @@ public class Account {
 
         return 0.0;
     }
+
+    //check if an account number already exists, so we don't have two accounts with same number
+
     public static boolean accountNumberExists(String accountNumber) {
         String sql = "SELECT COUNT(*) AS count FROM accounts WHERE accountNumber = ?";
 
@@ -144,6 +157,7 @@ public class Account {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                //check if there are already other accounts with same account num, return true
                 return rs.getInt("count") > 0;
             }
 
@@ -153,11 +167,13 @@ public class Account {
         return false;
     }
 
+    //creates a new account for the user in the database
+
     public static boolean createAccount(int userId, String accountType, double balance) {
 
         String accountNumber;
 
-        // generate UNIQUE account number
+        //generate an account number until it is a unique account number
         do {
             accountNumber = String.valueOf((int)(Math.random() * 90000000 + 10000000));
         } while (accountNumberExists(accountNumber));
@@ -182,26 +198,28 @@ public class Account {
     }
 
 
-    public static boolean userHasAccountType(int userId, String accountType) {
+    //we didn't use this to check if the user already has account type, we did it in the accountviewcontroller
 
-        String sql = "SELECT COUNT(*) AS count FROM accounts WHERE userID = ? AND accountType = ?";
-
-        try (Connection conn = connectionManager.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, userId);
-            stmt.setString(2, accountType);
-
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("count") > 0; // true if user already has this type
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
+//    public static boolean userHasAccountType(int userId, String accountType) {
+//
+//        String sql = "SELECT COUNT(*) AS count FROM accounts WHERE userID = ? AND accountType = ?";
+//
+//        try (Connection conn = connectionManager.getConnection();
+//             PreparedStatement stmt = conn.prepareStatement(sql)) {
+//
+//            stmt.setInt(1, userId);
+//            stmt.setString(2, accountType);
+//
+//            ResultSet rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                return rs.getInt("count") > 0; // true if user already has this type
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return false;
+//    }
 
 }

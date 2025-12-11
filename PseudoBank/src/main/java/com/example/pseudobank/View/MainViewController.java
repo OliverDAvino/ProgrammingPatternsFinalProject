@@ -1,5 +1,6 @@
 package com.example.pseudobank.View;
 
+
 import com.example.pseudobank.Controller.MainController;
 import com.example.pseudobank.Model.Session;
 import com.example.pseudobank.Model.Transaction;
@@ -14,9 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class MainViewController {
 
-    private MainController mainController = new MainController();
+//    private MainController mainController = new MainController();
 
     @FXML
     private ImageView menuBarLogo;
@@ -44,10 +46,13 @@ public class MainViewController {
         //make logo circle
         menuBarLogo.setFitHeight(80);
         menuBarLogo.setFitWidth(80);
+
+        //display a tip
         int index = (int)(Math.random() * Session.tips.length);
         String tip = Session.tips[index];
         financialTipLabel.setText(tip);
 
+        //make logo circle
         Circle clip = new Circle(40,40, 40);
 
         menuBarLogo.setClip(clip);
@@ -59,8 +64,10 @@ public class MainViewController {
     public void setAccountName(String name) {
         accountName.setText(name);
 
+        //get the current hour
         int hour = java.time.LocalTime.now().getHour();
 
+        //change the welcom message depending on time
         if (hour < 12) {
             menuWelcomeLabel.setText("Good Morning, " + name);
         } else if (hour < 18) {
@@ -77,6 +84,7 @@ public class MainViewController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Accounts.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        //get the accounts controller, and pass the all the users accounts that they have
         AccountsViewController accountsViewController = fxmlLoader.getController();
 
         accountsViewController.loadAccountTypes(Session.userId);
@@ -94,6 +102,7 @@ public class MainViewController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Transactions.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        //again pass the users accounts to the transaction page
         TransactionViewController transactionViewController = fxmlLoader.getController();
         transactionViewController.loadAccountTypes(Session.userId);
 

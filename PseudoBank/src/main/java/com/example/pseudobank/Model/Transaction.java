@@ -43,7 +43,7 @@ public class Transaction {
     }
 
 
-
+    //method to get all the transactions for one account from the database
     public static List<Transaction> getTransactionsByAccount(int accountId) {
 
         String sql = "SELECT transactionId, amount, transactionType, date FROM transactions WHERE accountId = ? ORDER BY date DESC";
@@ -55,6 +55,7 @@ public class Transaction {
             stmt.setInt(1, accountId);
             ResultSet rs = stmt.executeQuery();
 
+            //get all the transactions and crate the object to add to the list of transactions
             while (rs.next()) {
                 list.add(new Transaction(
                         rs.getInt("transactionId"),
@@ -71,20 +72,18 @@ public class Transaction {
         return list;
     }
 
-
+    //adds new transaction and updates the account balance
     public static boolean insertTransaction(int accountId, double amount, String type) {
 
-        String insertTx =
-                "INSERT INTO transactions (amount, transactionType, accountId) VALUES (?, ?, ?)";
+        String insertTx = "INSERT INTO transactions (amount, transactionType, accountId) VALUES (?, ?, ?)";
 
-        String updateBalance =
-                "UPDATE accounts SET balance = balance + ? WHERE accountId = ?";
+        String updateBalance = "UPDATE accounts SET balance = balance + ? WHERE accountId = ?";
 
         try (Connection conn = connectionManager.getConnection()) {
-
+            //turn off so that both actions happend together
             conn.setAutoCommit(false);
 
-            //add new transaction
+            //add new transaction into the table
             PreparedStatement txStmt = conn.prepareStatement(insertTx);
             txStmt.setDouble(1, amount);
             txStmt.setString(2, type);
@@ -97,6 +96,7 @@ public class Transaction {
             balStmt.setInt(2, accountId);
             balStmt.executeUpdate();
 
+            //save the cahgnes
             conn.commit();
             return true;
 

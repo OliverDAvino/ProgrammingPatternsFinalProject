@@ -75,18 +75,18 @@ public class TransactionViewController {
     @FXML
     public void initialize() {
 
-        // Display strings inside left column
+        //display strings inside left column
         displayAccountsTableView.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue())
         );
 
-        // Transaction table columns
+        //transaction table columns
         transactionIDColumn.setCellValueFactory(new PropertyValueFactory<>("transactionId"));
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         transactionTypeColumn.setCellValueFactory(new PropertyValueFactory<>("transactionType"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        // Listen to account selection
+        //listen to account selection
         accountTypeTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 loadTransactionsByType(newVal);
@@ -96,28 +96,29 @@ public class TransactionViewController {
 
     }
 
-
+    //load all the account types
     public void loadAccountTypes(int userID){
         List<String> accountTypes = Account.getUserAccounts(userID);
         accountTypeTableView.setItems(FXCollections.observableArrayList(accountTypes));
 
     }
 
+    //load all the transactions for the account type that was selected
     public void loadTransactionsByType(String type) {
 
         int userID = Session.userId;
 
-        // Find the accountId for this user & type
+        //find the accountId for this user & type
         int accountId = Account.getAccountIdByType(userID, type);
         if (accountId == -1) {
             System.out.println("No account found for type: " + type);
             return;
         }
 
-        // Load transactions for this account
+        //load transactions for this account from database
         List<Transaction> txList = Transaction.getTransactionsByAccount(accountId);
 
-        // Display them
+        //display them
         transactionTableView.setItems(FXCollections.observableArrayList(txList));
 
         // load the balance
@@ -178,12 +179,13 @@ public class TransactionViewController {
     }
 
 
+    //handles the depost button
     @FXML
     private void handlesDeposit() {
         performTransaction("Deposit");
     }
 
-
+    //handles the withdraw button
     @FXML
     private void handlesWithdraw() {
 
@@ -192,14 +194,18 @@ public class TransactionViewController {
     }
 
 
+    //method that does the deposit or withdraw
     private void performTransaction(String type) {
 
         String amountText = amountTextField.getText();
+
+        //check if they types an amount
         if (amountText.isEmpty()) {
             System.out.println("Amount required");
             return;
         }
 
+        //check that is number
         double amount;
         try {
             amount = Double.parseDouble(amountText);
@@ -212,7 +218,7 @@ public class TransactionViewController {
             return;
         }
 
-        // selected account type
+        //check if they  selected account type
         String selectedType = accountTypeTableView.getSelectionModel().getSelectedItem();
         if (selectedType == null) {
             System.out.println("No account selected");
@@ -236,17 +242,20 @@ public class TransactionViewController {
                 return;
             }
 
-
+            //make the amount negative
             amount = -amount;
         }
 
         errorLabel.setText("");
+
+        //add transaction to database
         boolean success = Transaction.insertTransaction(accountId, amount, type);
 
 
         if (success) {
             System.out.println("Transaction added!");
 
+            //log the action of the transaction into the log file using a thread
             TransactionLogger.log(
                     "UserID " + userID +
                             " | AccountID " + accountId +
@@ -267,7 +276,7 @@ public class TransactionViewController {
     }
 
 
-
+    //updates the balance after transactions
     private void refreshBalanceLabel(int accountId) {
         double balance = Account.getBalanceByAccountId(accountId);
         accountBalance.setText("Balance: $" + String.format("%.2f", balance));

@@ -8,7 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+//Login in model class that checks if the username and the password are correct
+//it gets the user's full name and id from the database
+
 public class Login {
+
+    //method to check if the users info are valid and match in the database
 
     public static boolean checkUserLogin(String username, String password) {
 
@@ -30,6 +35,9 @@ public class Login {
 
     }
 
+    //method to get the users fullname from the database so we can use it later in the main page
+    //we use the username to find the right peron
+
     public static String getUserFullName(String username) {
 
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -44,6 +52,7 @@ public class Login {
 
 
             if (rs.next()) {
+                //save the fullname in Session class for later
                 Session.userName = rs.getString("fullName");
                 return rs.getString("fullName");
             } else {
@@ -58,6 +67,8 @@ public class Login {
 
 
     }
+
+    //method to get the users id form the database
 
     public static int getUserID(String username) {
 

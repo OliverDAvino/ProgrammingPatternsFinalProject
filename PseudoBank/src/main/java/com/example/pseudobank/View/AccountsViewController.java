@@ -73,18 +73,20 @@ public class AccountsViewController {
 
     @FXML
     public void initialize() {
+        //add the choices that the user can add an account for
+        accountTypeComboBox.getItems().addAll("Chequing", "Savings", "TFSA", "RRSP", "Students");
 
-        accountTypeComboBox.getItems().addAll("Chequing", "Savings", "TFSA", "RRSP");
-
+        //displays the accounts types in strings
         displayAccountsTableView.setCellValueFactory(data ->
                 new SimpleStringProperty(data.getValue())
         );
 
-
+        //organize the account field into the right table columns
         accountTypeColumn.setCellValueFactory(new PropertyValueFactory<>("accountType"));
         accountNumberColumn.setCellValueFactory(new PropertyValueFactory<>("accountNumber"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
 
+        //when user clicks on an account type we load the account info in the right table
         accountTypeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
 
@@ -97,13 +99,14 @@ public class AccountsViewController {
 
     }
 
+    //load all the account types the user has in the left table
     public void loadAccountTypes(int userID){
         List<String> accountTypes = Account.getUserAccounts(userID);
         accountTypeTableView.setItems(FXCollections.observableArrayList(accountTypes));
 
     }
 
-
+    //load account details for the selected type
     public void loadAccountsByType(String type) {
         int userID = Session.userId; // however you store logged-in user
         List<Account> accounts = Account.getUserAccountsByType(userID, type);
@@ -111,6 +114,7 @@ public class AccountsViewController {
     }
 
 
+    //go back to home page
     @FXML
     private void handleMainPage() throws IOException {
 
@@ -120,7 +124,7 @@ public class AccountsViewController {
         // Get the controller that belongs to the loaded FXML
         MainViewController controller = fxmlLoader.getController();
 
-        //Send data to it
+        //Send the usersname  to it
         controller.setAccountName(Session.userName);
 
         Stage stage = (Stage) homeButton.getScene().getWindow();
@@ -136,6 +140,7 @@ public class AccountsViewController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Transactions.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
+        //load all the users account types on the transactios page
         TransactionViewController transactionViewController = fxmlLoader.getController();
         transactionViewController.loadAccountTypes(Session.userId);
 
@@ -159,6 +164,7 @@ public class AccountsViewController {
 
     }
 
+    //handles creating a new account when they click the button
     @FXML
     private void handleCreateAccount() {
 
@@ -178,6 +184,7 @@ public class AccountsViewController {
             return;
         }
 
+        //checks if it is a number
         double balance;
         try {
             balance = Double.parseDouble(balanceInput);
@@ -197,7 +204,7 @@ public class AccountsViewController {
             return;
         }
 
-        //Create the account with starting balance
+        //Create the account in the database with starting balance
         boolean success = Account.createAccount(userId, selectedType, balance);
 
         if (!success) {
@@ -205,6 +212,7 @@ public class AccountsViewController {
             return;
         }
 
+        //reload the table to show new account
         loadAccountTypes(userId);
         loadAccountsByType(selectedType);
         createAccountError.setText("Account created successfully!");
